@@ -11,6 +11,6 @@
   [opts]
   (println "Creating the uberjar")
   (-> opts
-      (assoc :lib lib :version version :main main)
+      (assoc :version version :main main)
       (bb/clean)
       (bb/uber)))
