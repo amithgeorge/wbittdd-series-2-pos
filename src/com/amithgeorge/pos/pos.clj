@@ -17,7 +17,7 @@
         false
         (not (str/blank? (first parts)))))))
 
-(defn parse-input [input]
+(defn parse-product-id [input]
   (if (or (str/blank? input)
           (not (ends-with-newline? input)))
     nil
@@ -28,16 +28,14 @@
         nil
         code))))
 
-
 (def price {"product-1" "USD 15.50"
             "product 2" "USD 37.19"})
 
 (defn scan
   ([display input]
-   (if-let [parsed-input (parse-input input)]
-     (case parsed-input
-       "product-1" (display (price parsed-input))
-       "product 2" (display (price parsed-input))
+   (if-let [product-id (parse-product-id input)]
+     (if-let [product-price (price product-id)]
+       (display product-price)
        (display "Not found!"))
      (display "Invalid code!"))))
 
