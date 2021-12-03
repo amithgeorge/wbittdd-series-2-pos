@@ -17,11 +17,25 @@
         false
         (not (str/blank? (first parts)))))))
 
+(defn parse-input [input]
+  (if (or (str/blank? input)
+          (not (ends-with-newline? input)))
+    nil
+    (let [parts (str/split-lines input)
+          code (first parts)]
+      (if (or (not= 1 (count parts))
+              (str/blank? code))
+        nil
+        code))))
+
+(comment
+  (str/blank? nil))
+
 (defn scan
   [display input]
   (if (not (valid-input? input))
     (display "Invalid code!")
-    (let [input (trim-newline input)]
+    (let [input (parse-input input)]
       (case input
         "product-1" (display "USD 15.50")
         "product 2" (display "USD 37.19")
