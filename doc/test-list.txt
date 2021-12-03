@@ -5,7 +5,7 @@ happy path
 	output:
 		- display should show its price in dollars - "USD 15.50"
 	input:
-		- "product-1\n\r", and product-1 found
+		- "product-1\r\n", and product-1 found
 			- Windows newline
 	output:
 		- display should show its price in dollars - "USD 15.50"

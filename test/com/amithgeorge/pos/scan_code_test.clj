@@ -29,11 +29,19 @@
       (is (= "Not found!" @display-text)))))
 
 (deftest handle-malformed-code
-  (testing "Given code for existing product, without ending line, display invalid code message"
-    (let [display-text (atom "DISPLAY_NOT_CALLED")
-          display-fn (fn [msg] (reset! display-text msg))]
-      (sut/scan display-fn "product-1")
-      (is (= "Invalid code!" @display-text)))))
+  (let [args-list [["Invalid code!" nil "null input is invalid"]
+                   ["Invalid code!" "" "empty input is invalid"]
+                   ["Invalid code!" "\n" "empty input with just newline is invalid"]
+                   ["Invalid code!" "   \n" "whitespace input with just newline is invalid"]
+                   ["Invalid code!" " ... \n .. \n" "multiple newline is invalid"]
+                   ["Invalid code!" "product-1\n  " "whitespace after newline is invalid"]
+                   ["Invalid code!" "product-1  " "code with no newline is invalid"]]]
+    (testing "malformed inputs"
+      (doseq [[expected input err-message] args-list]
+        (let [display-text (atom "DISPLAY_NOT_CALLED")
+              display-fn (fn [msg] (reset! display-text msg))]
+          (sut/scan display-fn input)
+          (is (= expected @display-text) err-message))))))
 
 (deftest support-both-unix-and-windows-newlines
   (testing "A code ending with unix newline is treated as valid"
