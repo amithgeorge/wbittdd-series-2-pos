@@ -28,15 +28,16 @@
         nil
         code))))
 
-(comment
-  (str/blank? nil))
+
+(def price {"product-1" "USD 15.50"
+            "product 2" "USD 37.19"})
 
 (defn scan
-  [display input]
-  (if-let [parsed-input (parse-input input)]
-    (case parsed-input
-      "product-1" (display "USD 15.50")
-      "product 2" (display "USD 37.19")
-      (display "Not found!"))
-    (display "Invalid code!")))
+  ([display input]
+   (if-let [parsed-input (parse-input input)]
+     (case parsed-input
+       "product-1" (display (price parsed-input))
+       "product 2" (display (price parsed-input))
+       (display "Not found!"))
+     (display "Invalid code!"))))
 
