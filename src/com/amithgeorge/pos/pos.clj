@@ -5,18 +5,6 @@
   (or (.endsWith input "\n")
       (.endsWith input "\r\n")))
 
-(defn trim-newline [input]
-  (.replaceFirst input "\r\n|\n", ""))
-
-(defn valid-input? [input]
-  (if (or (nil? input)
-          (not (ends-with-newline? input)))
-    false
-    (let [parts (str/split-lines input)]
-      (if (not= 1 (count parts))
-        false
-        (not (str/blank? (first parts)))))))
-
 (defn parse-product-id [input]
   (if (or (str/blank? input)
           (not (ends-with-newline? input)))
