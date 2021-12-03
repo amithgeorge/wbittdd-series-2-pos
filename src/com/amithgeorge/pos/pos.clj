@@ -33,11 +33,10 @@
 
 (defn scan
   [display input]
-  (if (not (valid-input? input))
-    (display "Invalid code!")
-    (let [input (parse-input input)]
-      (case input
-        "product-1" (display "USD 15.50")
-        "product 2" (display "USD 37.19")
-        (display "Not found!")))))
+  (if-let [parsed-input (parse-input input)]
+    (case parsed-input
+      "product-1" (display "USD 15.50")
+      "product 2" (display "USD 37.19")
+      (display "Not found!"))
+    (display "Invalid code!")))
 
