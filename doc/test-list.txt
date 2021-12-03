@@ -1,0 +1,36 @@
+happy path
+	input:
+		- "product-1\n", and product-1 found
+			- UNIX newline
+	output:
+		- display should show its price in dollars - "USD 15.50"
+	input:
+		- "product-1\n\r", and product-1 found
+			- Windows newline
+	output:
+		- display should show its price in dollars - "USD 15.50"
+	input:
+		- "product 2\n", and product 2 found
+	output:
+		- display should show its price in dollars - "USD 37.19"
+	input:
+		- "product 31\n", and product 31 found
+	output:
+		- display should show its price in dollars - "USD 13.23"
+
+error paths
+	input:
+		- null input
+		- empty string
+		- string with just newline
+		- string with whitespace and newline terminated
+		- string with multiple newlines
+		- string with content after newlines
+	output:
+		- display should show text "Invalid code!"
+
+	input:
+		- valid input, but product info not present
+	output:
+		- display should show text "Not found!"
+
