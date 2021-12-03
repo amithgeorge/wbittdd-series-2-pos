@@ -21,6 +21,8 @@
 
 (defn scan
   ([display input]
+   (scan price display input))
+  ([price display input]
    (if-let [product-id (parse-product-id input)]
      (if-let [product-price (price product-id)]
        (display product-price)
