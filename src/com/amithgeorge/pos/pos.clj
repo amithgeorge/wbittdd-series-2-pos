@@ -16,16 +16,11 @@
         nil
         code))))
 
-(def price {"product-1" "USD 15.50"
-            "product 2" "USD 37.19"})
-
 (defn scan
-  ([display input]
-   (scan price display input))
-  ([price display input]
-   (if-let [product-id (parse-product-id input)]
-     (if-let [product-price (price product-id)]
-       (display product-price)
-       (display "Not found!"))
-     (display "Invalid code!"))))
+  [price display input]
+  (if-let [product-id (parse-product-id input)]
+    (if-let [product-price (price product-id)]
+      (display product-price)
+      (display "Not found!"))
+    (display "Invalid code!")))
 
