@@ -2,6 +2,10 @@
   (:require [clojure.test :refer [deftest testing is]]
             [com.amithgeorge.pos.pos :as sut]))
 
+(defn- valid-price-message?
+  [message]
+  (.startsWith message "USD "))
+
 (deftest handle-code-for-existing-product
   (testing "Given a valid code for an existing product, display its price"
     (let [input "product-1\n"
@@ -30,3 +34,16 @@
           display-fn (fn [msg] (reset! display-text msg))]
       (sut/scan display-fn "product-1")
       (is (= "Invalid code!" @display-text)))))
+
+(deftest support-both-unix-and-windows-newlines
+  (testing "A code ending with unix newline is treated as valid"
+    (let [display-text (atom "DISPLAY_NOT_CALLED")
+          display-fn (fn [msg] (reset! display-text msg))]
+      (sut/scan display-fn "product-1\n")
+      (is (valid-price-message? @display-text))))
+
+  (testing "A code ending with windows newline is treated as valid"
+    (let [display-text (atom "DISPLAY_NOT_CALLED")
+          display-fn (fn [msg] (reset! display-text msg))]
+      (sut/scan display-fn "product-1\r\n")
+      (is (valid-price-message? @display-text)))))
