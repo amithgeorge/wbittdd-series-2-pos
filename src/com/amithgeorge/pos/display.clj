@@ -8,8 +8,8 @@
   (println "inside show price")
   (*device* price))
 
-(defmethod show :invalid [_]
+(defmethod show :invalid [& _]
   (*device* "Invalid code!"))
 
-(defmethod show :not-found [_]
+(defmethod show :not-found [& _]
   (*device* "Not found!"))

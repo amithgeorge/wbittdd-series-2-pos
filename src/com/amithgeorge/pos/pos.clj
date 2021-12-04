@@ -21,6 +21,6 @@
   (if-let [product-id (parse-product-id input)]
     (if-let [product-price (price product-id)]
       (display :price {:price product-price})
-      (display "Not found!"))
-    (display "Invalid code!")))
+      (display :not-found))
+    (display :invalid)))
 

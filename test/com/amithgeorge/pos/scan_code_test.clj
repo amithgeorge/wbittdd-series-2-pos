@@ -21,11 +21,8 @@
 
 (defn setup
   []
-  (let [display-text fake-device
-        display-fn (fn ([msg] (reset! display-text msg))
-                     ([type & args] (apply display/show type args)))
-        sut-fn (partial sut/scan catalog/price display-fn)]
-    [sut-fn display-text]))
+  (let [sut-fn (partial sut/scan catalog/price display/show)]
+    [sut-fn fake-device]))
 
 (deftest handle-code-for-existing-product
   (testing "Given a valid code for an existing product, display its price"
