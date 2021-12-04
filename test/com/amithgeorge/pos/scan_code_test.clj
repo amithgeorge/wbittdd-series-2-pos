@@ -1,22 +1,17 @@
 (ns com.amithgeorge.pos.scan-code-test
   (:require [clojure.test :refer [deftest testing is]]
+            [com.amithgeorge.pos.catalog :as catalog]
             [com.amithgeorge.pos.pos :as sut]))
 
 (defn- valid-price-message?
   [message]
   (.startsWith message "USD "))
 
-(defn price-fn
-  [product-id]
-  (get {"product-1" "USD 15.50"
-        "product 2" "USD 37.19"}
-       product-id))
-
 (defn setup
   []
   (let [display-text (atom "DISPLAY_NOT_CALLED")
         display-fn (fn [msg] (reset! display-text msg))
-        sut-fn (partial sut/scan price-fn display-fn)]
+        sut-fn (partial sut/scan catalog/price display-fn)]
     [sut-fn display-text]))
 
 (deftest handle-code-for-existing-product
