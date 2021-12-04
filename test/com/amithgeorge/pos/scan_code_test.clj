@@ -1,19 +1,8 @@
 (ns com.amithgeorge.pos.scan-code-test
-  (:require [clojure.test :refer [deftest testing is use-fixtures]]
+  (:require [clojure.test :refer [deftest testing is]]
             [com.amithgeorge.pos.catalog :as catalog]
             [com.amithgeorge.pos.display :as display]
             [com.amithgeorge.pos.pos :as sut]))
-
-(def fake-device (atom "NOTHING_TO_DISPLAY"))
-
-(defn bind-device
-  [f]
-  (reset! fake-device "NOTHING_TO_DISPLAY")
-  (binding [display/*device* (fn [message]
-                               (reset! fake-device message))]
-    (f)))
-
-(use-fixtures :each bind-device)
 
 (defn- valid-price-message?
   [message]
@@ -21,8 +10,11 @@
 
 (defn setup
   []
-  (let [sut-fn (partial sut/scan catalog/price display/show)]
-    [sut-fn fake-device]))
+  (let [mock-device (atom "NOTHING_TO_DISPLAY")
+        device-fn (fn [message] (reset! mock-device message))
+        sut-fn (partial sut/scan catalog/price
+                        (partial display/show device-fn))]
+    [sut-fn mock-device]))
 
 (deftest handle-code-for-existing-product
   (testing "Given a valid code for an existing product, display its price"
