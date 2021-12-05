@@ -16,9 +16,7 @@
     :pass-through (apply device args)))
 
 (defn price
-  ([display product-price]
-   (display :price {:price product-price}))
-  ([display-device display product-price]
+  ([display-device product-price]
    (show display-device :price {:price product-price})))
 
 (defn total
@@ -26,12 +24,12 @@
    (show display-device :total {:total total})))
 
 (defn not-found-message
-  [display]
-  (display :not-found))
+  ([display-device]
+   (show display-device :not-found)))
 
 (defn code-invalid-message
-  [display]
-  (display :invalid))
+  ([display-device]
+   (show display-device :invalid)))
 
 (defn nothing-scanned-message
   ([display-device]

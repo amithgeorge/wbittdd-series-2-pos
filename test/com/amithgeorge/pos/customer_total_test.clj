@@ -2,14 +2,12 @@
   (:require [clojure.test :refer [deftest testing is]]
             [com.amithgeorge.pos.cart :as cart]
             [com.amithgeorge.pos.catalog :as catalog]
-            [com.amithgeorge.pos.display :as display]
             [com.amithgeorge.pos.pos :as sut]))
 
 (deftest no-products-scanned
   (testing "no products scanned yet, then display should show none-scanned message"
     (let [mock-device (atom "NOTHING_DISPLAYED_YET")
           device-fn (fn [message] (reset! mock-device message))
-          display-fn (partial display/show device-fn)
           display-text mock-device
           cart (cart/new)]
       (sut/total device-fn cart)
@@ -21,11 +19,10 @@
     (let [mock-device (atom "NOTHING_DISPLAYED_YET")
           device-fn (fn [message]
                       (reset! mock-device message))
-          display-fn (partial display/show device-fn)
           display-text mock-device
           price-fn catalog/price
           cart (cart/new)]
-      (sut/scan price-fn display-fn cart "product-1\n")
+      (sut/scan price-fn device-fn cart "product-1\n")
       (sut/total device-fn cart)
       (is (= "Total: USD 15.50" @display-text)))))
 
@@ -34,12 +31,11 @@
     (let [mock-device (atom "NOTHING_DISPLAYED_YET")
           device-fn (fn [message]
                       (reset! mock-device message))
-          display-fn (partial display/show device-fn)
           display-text mock-device
           price-fn catalog/price
           cart (cart/new)]
-      (sut/scan price-fn display-fn cart "product-1\n")
-      (sut/scan price-fn display-fn cart "product 2\n")
+      (sut/scan price-fn device-fn cart "product-1\n")
+      (sut/scan price-fn device-fn cart "product 2\n")
       (sut/total device-fn cart)
       (is (= "Total: USD 52.69" @display-text)))))
 
@@ -48,12 +44,11 @@
     (let [mock-device (atom "NOTHING_DISPLAYED_YET")
           device-fn (fn [message]
                       (reset! mock-device message))
-          display-fn (partial display/show device-fn)
           display-text mock-device
           price-fn catalog/price
           cart (cart/new)]
-      (sut/scan price-fn display-fn cart "product-1\n")
-      (sut/scan price-fn display-fn cart "DUMMY PRODUCT\n")
+      (sut/scan price-fn device-fn cart "product-1\n")
+      (sut/scan price-fn device-fn cart "DUMMY PRODUCT\n")
       (sut/total device-fn cart)
       (is (= "Total: USD 15.50" @display-text))))
 
@@ -61,13 +56,12 @@
     (let [mock-device (atom "NOTHING_DISPLAYED_YET")
           device-fn (fn [message]
                       (reset! mock-device message))
-          display-fn (partial display/show device-fn)
           display-text mock-device
           price-fn catalog/price
           cart (cart/new)]
-      (sut/scan price-fn display-fn cart "product-1\n")
-      (sut/scan price-fn display-fn cart "DUMMY PRODUCT\n")
-      (sut/scan price-fn display-fn cart "product 2\n")
+      (sut/scan price-fn device-fn cart "product-1\n")
+      (sut/scan price-fn device-fn cart "DUMMY PRODUCT\n")
+      (sut/scan price-fn device-fn cart "product 2\n")
       (sut/total device-fn cart)
       (is (= "Total: USD 52.69" @display-text))))
 
@@ -75,11 +69,10 @@
     (let [mock-device (atom "NOTHING_DISPLAYED_YET")
           device-fn (fn [message]
                       (reset! mock-device message))
-          display-fn (partial display/show device-fn)
           display-text mock-device
           price-fn catalog/price
           cart (cart/new)]
-      (sut/scan price-fn display-fn cart "product 2\n")
-      (sut/scan price-fn display-fn cart "INVALID\n\n\nINPUT")
+      (sut/scan price-fn device-fn cart "product 2\n")
+      (sut/scan price-fn device-fn cart "INVALID\n\n\nINPUT")
       (sut/total device-fn cart)
       (is (= "Total: USD 37.19" @display-text)))))

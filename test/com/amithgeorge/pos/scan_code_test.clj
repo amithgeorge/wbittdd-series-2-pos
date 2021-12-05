@@ -2,7 +2,6 @@
   (:require [clojure.test :refer [deftest testing is]]
             [com.amithgeorge.pos.cart :as cart]
             [com.amithgeorge.pos.catalog :as catalog]
-            [com.amithgeorge.pos.display :as display]
             [com.amithgeorge.pos.pos :as sut]))
 
 (defn- valid-price-message?
@@ -16,7 +15,7 @@
         cart (cart/new)
         sut-fn (partial sut/scan
                         catalog/price
-                        (partial display/show device-fn)
+                        device-fn
                         cart)]
     [sut-fn mock-device]))
 
