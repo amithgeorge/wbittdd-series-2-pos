@@ -30,6 +30,6 @@
 
 (defn total
   [display cart]
-  (if (str/blank? (get @cart :total-str))
+  (if (zero? (get @cart :total))
     (display :pass-through "No products scanned yet. Please scan a product.")
-    (display :total {:total (get @cart :total-str)})))
+    (display :total {:total (get @cart :total)})))

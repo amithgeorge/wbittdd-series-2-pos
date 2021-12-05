@@ -6,7 +6,7 @@
     :price (let [{:keys [price]} (first args)]
              (device price))
     :total (let [{:keys [total]} (first args)]
-             (device (format "Total: %s" total)))
+             (device (format "Total: USD %s" total)))
     :invalid (device "Invalid code!")
     :not-found (device "Not found!")
     :pass-through (apply device args)))
