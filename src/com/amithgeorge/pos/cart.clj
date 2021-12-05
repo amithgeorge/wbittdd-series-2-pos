@@ -1,4 +1,5 @@
-(ns com.amithgeorge.pos.cart)
+(ns com.amithgeorge.pos.cart
+  (:refer-clojure :exclude [empty?]))
 
 (defn new []
   (atom {:total 0M}))
