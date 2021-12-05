@@ -22,11 +22,13 @@
   ([price display cart input]
    (if-let [product-id (parse-product-id input)]
      (if-let [product-price (price product-id)]
-       (display :price {:price product-price})
+       (do (display :price {:price product-price})
+           (swap! cart assoc :total-str product-price))
        (display :not-found))
      (display :invalid))))
 
 (defn total
   [display cart]
-  (when (str/blank? (get @cart :total-str))
-    (display :pass-through "No products scanned yet. Please scan a product.")))
+  (if (str/blank? (get @cart :total-str))
+    (display :pass-through "No products scanned yet. Please scan a product.")
+    (display :total {:total (get @cart :total-str)})))

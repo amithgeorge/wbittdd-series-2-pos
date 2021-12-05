@@ -15,7 +15,7 @@
       (is (= "No products scanned yet. Please scan a product."
              @display-text)))))
 
-(deftest ^:kaocha/skip one-product-scanned
+(deftest one-product-scanned
   (testing "one product scanned, then display should show its price as total"
     (let [mock-device (atom "NOTHING_DISPLAYED_YET")
           device-fn (fn [message]
@@ -25,6 +25,6 @@
           display-text mock-device
           price-fn catalog/price
           cart (atom {:total-str ""})]
-      (sut/scan price-fn display-fn "product-1\n")
+      (sut/scan price-fn display-fn cart "product-1\n")
       (sut/total display-fn cart)
       (is (= "Total: USD 15.50" @display-text)))))
