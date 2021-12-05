@@ -17,12 +17,14 @@
         code))))
 
 (defn scan
-  [price display input]
-  (if-let [product-id (parse-product-id input)]
-    (if-let [product-price (price product-id)]
-      (display :price {:price product-price})
-      (display :not-found))
-    (display :invalid)))
+  ([price display input]
+   (scan price display {:total-str ""} input))
+  ([price display cart input]
+   (if-let [product-id (parse-product-id input)]
+     (if-let [product-price (price product-id)]
+       (display :price {:price product-price})
+       (display :not-found))
+     (display :invalid))))
 
 (defn total
   [display cart]
