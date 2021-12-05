@@ -18,7 +18,7 @@
 
 (defn scan
   ([price display input]
-   (scan price display {:total-str ""} input))
+   (scan price display (atom {:total-str ""}) input))
   ([price display cart input]
    (if-let [product-id (parse-product-id input)]
      (if-let [product-price (price product-id)]
@@ -28,5 +28,5 @@
 
 (defn total
   [display cart]
-  (when (str/blank? (cart :total-str))
+  (when (str/blank? (get @cart :total-str))
     (display :pass-through "No products scanned yet. Please scan a product.")))
