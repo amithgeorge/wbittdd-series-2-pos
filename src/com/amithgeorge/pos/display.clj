@@ -37,7 +37,5 @@
 
 (defn nothing-scanned-message
   ([display-device]
-   (show display-device :pass-through "No products scanned yet. Please scan a product."))
-  ([display-device display]
    (show display-device :pass-through "No products scanned yet. Please scan a product.")))
 
