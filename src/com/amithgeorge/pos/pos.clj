@@ -16,9 +16,21 @@
         nil
         code))))
 
+;; Cart functions
+
 (defn- update-cart-total
   [cart product-price]
   (swap! cart update :total (fnil + 0M) product-price))
+
+(defn- cart-empty?
+  [cart]
+  (zero? (get @cart :total)))
+
+(defn- cart-total
+  [cart]
+  (get @cart :total))
+
+;; Display functions
 
 (defn- display-price
   [display product-price]
@@ -51,6 +63,6 @@
 
 (defn total
   [display cart]
-  (if (zero? (get @cart :total))
+  (if (cart-empty? cart)
     (display-nothing-scanned-message display)
-    (display-total display (get @cart :total))))
+    (display-total display (cart-total cart))))
