@@ -24,3 +24,6 @@
       (display :not-found))
     (display :invalid)))
 
+(defn total
+  [display]
+  (display :pass-through "No products scanned yet. Please scan a product."))

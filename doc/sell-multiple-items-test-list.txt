@@ -1,0 +1,22 @@
+happy paths
+	- When: cashier asks for total
+		- Given different products with price USD 3.56, USD 2.47, USD 5.00 are scanned
+			Then display "Total: USD 11.03"
+
+		- Given products with price USD 3.56 and price USD 5.00 was scanned successfully, but product with price USD 2.47 was not found
+			Then display "Total: USD 8.56"
+
+error paths
+	- When: cashier asks for total
+		- Given no product is scanned
+			Then display "No products scanned yet. Please scan a product."
+
+		- Given 1 product scanned with error no product found
+			Then display "No products scanned yet. Please scan a product."
+
+		- Given 1 product scanned with invalid barcode
+			Then display "No products scanned yet. Please scan a product."
+
+
+Questions
+- how does the user reset the total for the next customer?

@@ -6,4 +6,5 @@
     :price (let [{:keys [price]} (first args)]
              (device price))
     :invalid (device "Invalid code!")
-    :not-found (device "Not found!")))
+    :not-found (device "Not found!")
+    :pass-through (apply device args)))
