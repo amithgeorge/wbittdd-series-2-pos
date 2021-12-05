@@ -17,8 +17,6 @@
         code))))
 
 (defn scan
-  ([price display input]
-   (scan price display (atom {:total-str ""}) input))
   ([price display cart input]
    (if-let [product-id (parse-product-id input)]
      (if-let [product-price (price product-id)]

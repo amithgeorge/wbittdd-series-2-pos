@@ -12,8 +12,11 @@
   []
   (let [mock-device (atom "NOTHING_TO_DISPLAY")
         device-fn (fn [message] (reset! mock-device message))
-        sut-fn (partial sut/scan catalog/price
-                        (partial display/show device-fn))]
+        cart (atom {:total-str ""})
+        sut-fn (partial sut/scan
+                        catalog/price
+                        (partial display/show device-fn)
+                        cart)]
     [sut-fn mock-device]))
 
 (deftest handle-code-for-existing-product
