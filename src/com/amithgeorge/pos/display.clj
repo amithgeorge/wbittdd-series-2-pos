@@ -14,3 +14,24 @@
     :invalid (device "Invalid code!")
     :not-found (device "Not found!")
     :pass-through (apply device args)))
+
+(defn price
+  [display product-price]
+  (display :price {:price product-price}))
+
+(defn total
+  [display total]
+  (display :total {:total total}))
+
+(defn not-found-message
+  [display]
+  (display :not-found))
+
+(defn code-invalid-message
+  [display]
+  (display :invalid))
+
+(defn nothing-scanned-message
+  [display]
+  (display :pass-through "No products scanned yet. Please scan a product."))
+
