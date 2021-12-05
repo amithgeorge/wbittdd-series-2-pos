@@ -18,12 +18,16 @@
         nil
         code))))
 
+(defn- update-cart-and-display-price
+  [display cart product-price]
+  (cart/update-total cart product-price)
+  (display/price display product-price))
+
 (defn scan
   ([price display cart input]
    (if-let [product-id (parse-product-id input)]
      (if-let [product-price (price product-id)]
-       (do (display/price display product-price)
-           (cart/update-total cart product-price))
+       (update-cart-and-display-price display cart product-price)
        (display/not-found-message display))
      (display/code-invalid-message display))))
 
