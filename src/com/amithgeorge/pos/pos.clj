@@ -22,9 +22,7 @@
      (if-let [product-price (price product-id)]
        (let [product-price-str (if (string? product-price) product-price (format "USD %s" product-price))]
          (do (display :price {:price product-price-str})
-             (swap! cart update :total (fnil + 0M) product-price)
-             (swap! cart (fn [state]
-                           (assoc state :total-str (format "USD %s" (get state :total)))))))
+             (swap! cart update :total (fnil + 0M) product-price)))
        (display :not-found))
      (display :invalid))))
 
