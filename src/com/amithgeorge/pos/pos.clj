@@ -32,7 +32,7 @@
      (display/code-invalid-message display))))
 
 (defn total
-  [display cart]
-  (if (cart/empty? cart)
-    (display/nothing-scanned-message display)
-    (display/total display (cart/total cart))))
+  ([display-device display cart]
+   (if (cart/empty? cart)
+     (display/nothing-scanned-message display-device display)
+     (display/total display-device display (cart/total cart)))))

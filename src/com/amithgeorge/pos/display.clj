@@ -16,12 +16,16 @@
     :pass-through (apply device args)))
 
 (defn price
-  [display product-price]
-  (display :price {:price product-price}))
+  ([display product-price]
+   (display :price {:price product-price}))
+  ([display-device display product-price]
+   (show display-device :price {:price product-price})))
 
 (defn total
-  [display total]
-  (display :total {:total total}))
+  ([display total]
+   (display :total {:total total}))
+  ([display-device display total]
+   (show display-device :total {:total total})))
 
 (defn not-found-message
   [display]
@@ -32,6 +36,8 @@
   (display :invalid))
 
 (defn nothing-scanned-message
-  [display]
-  (display :pass-through "No products scanned yet. Please scan a product."))
+  ([display]
+   (display :pass-through "No products scanned yet. Please scan a product."))
+  ([display-device display]
+   (show display-device :pass-through "No products scanned yet. Please scan a product.")))
 
