@@ -28,7 +28,7 @@
       (sut/total display-fn cart)
       (is (= "Total: USD 15.50" @display-text)))))
 
-(deftest ^:kaocha/skip two-products-scanned
+(deftest two-products-scanned
   (testing "two products scanned, then display sum of their prices as total"
     (let [mock-device (atom "NOTHING_DISPLAYED_YET")
           device-fn (fn [message]
