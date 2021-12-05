@@ -34,5 +34,5 @@
 (defn total
   ([display-device display cart]
    (if (cart/empty? cart)
-     (display/nothing-scanned-message display-device display)
+     (display/nothing-scanned-message display-device)
      (display/total display-device display (cart/total cart)))))
