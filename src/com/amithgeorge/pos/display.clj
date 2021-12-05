@@ -4,7 +4,7 @@
   [price]
   (format "USD %s" price))
 
-(defn show
+(defn- show
   [device type & args]
   (case type
     :price (let [{:keys [price]} (first args)]
@@ -13,7 +13,7 @@
              (device (format "Total: %s" (format-price total))))
     :invalid (device "Invalid code!")
     :not-found (device "Not found!")
-    :pass-through (apply device args)))
+    :nothing-scanned (device "No products scanned yet. Please scan a product.")))
 
 (defn price
   ([display-device product-price]
@@ -33,5 +33,5 @@
 
 (defn nothing-scanned-message
   ([display-device]
-   (show display-device :pass-through "No products scanned yet. Please scan a product.")))
+   (show display-device :nothing-scanned)))
 
