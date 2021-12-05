@@ -81,5 +81,5 @@
           cart (cart/new)]
       (sut/scan price-fn display-fn cart "product 2\n")
       (sut/scan price-fn display-fn cart "INVALID\n\n\nINPUT")
-      (sut/total device-fn display-fn cart)
+      (sut/total device-fn cart)
       (is (= "Total: USD 37.19" @display-text)))))

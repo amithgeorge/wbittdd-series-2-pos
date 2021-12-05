@@ -22,9 +22,7 @@
    (show display-device :price {:price product-price})))
 
 (defn total
-  ([display total]
-   (display :total {:total total}))
-  ([display-device display total]
+  ([display-device total]
    (show display-device :total {:total total})))
 
 (defn not-found-message
