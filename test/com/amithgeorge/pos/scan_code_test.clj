@@ -1,5 +1,6 @@
 (ns com.amithgeorge.pos.scan-code-test
   (:require [clojure.test :refer [deftest testing is]]
+            [com.amithgeorge.pos.cart :as cart]
             [com.amithgeorge.pos.catalog :as catalog]
             [com.amithgeorge.pos.display :as display]
             [com.amithgeorge.pos.pos :as sut]))
@@ -12,7 +13,7 @@
   []
   (let [mock-device (atom "NOTHING_TO_DISPLAY")
         device-fn (fn [message] (reset! mock-device message))
-        cart (atom {:total-str "" :total 0M})
+        cart (cart/new)
         sut-fn (partial sut/scan
                         catalog/price
                         (partial display/show device-fn)

@@ -1,5 +1,6 @@
 (ns com.amithgeorge.pos.customer-total-test
   (:require [clojure.test :refer [deftest testing is]]
+            [com.amithgeorge.pos.cart :as cart]
             [com.amithgeorge.pos.catalog :as catalog]
             [com.amithgeorge.pos.display :as display]
             [com.amithgeorge.pos.pos :as sut]))
@@ -10,7 +11,7 @@
           device-fn (fn [message] (reset! mock-device message))
           display-fn (partial display/show device-fn)
           display-text mock-device
-          cart (atom {:total-str "" :total 0M})]
+          cart (cart/new)]
       (sut/total display-fn cart)
       (is (= "No products scanned yet. Please scan a product."
              @display-text)))))
@@ -23,7 +24,7 @@
           display-fn (partial display/show device-fn)
           display-text mock-device
           price-fn catalog/price
-          cart (atom {:total-str "" :total 0M})]
+          cart (cart/new)]
       (sut/scan price-fn display-fn cart "product-1\n")
       (sut/total display-fn cart)
       (is (= "Total: USD 15.50" @display-text)))))
@@ -36,7 +37,7 @@
           display-fn (partial display/show device-fn)
           display-text mock-device
           price-fn catalog/price
-          cart (atom {:total-str "" :total 0M})]
+          cart (cart/new)]
       (sut/scan price-fn display-fn cart "product-1\n")
       (sut/scan price-fn display-fn cart "product 2\n")
       (sut/total display-fn cart)
