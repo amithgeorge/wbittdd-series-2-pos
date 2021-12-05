@@ -25,5 +25,6 @@
     (display :invalid)))
 
 (defn total
-  [display]
-  (display :pass-through "No products scanned yet. Please scan a product."))
+  [display cart]
+  (when (str/blank? (cart :total-str))
+    (display :pass-through "No products scanned yet. Please scan a product.")))

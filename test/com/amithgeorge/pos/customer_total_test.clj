@@ -9,8 +9,9 @@
     (let [mock-device (atom "NOTHING_DISPLAYED_YET")
           device-fn (fn [message] (reset! mock-device message))
           display-fn (partial display/show device-fn)
-          display-text mock-device]
-      (sut/total display-fn)
+          display-text mock-device
+          cart {:total-str ""}]
+      (sut/total display-fn cart)
       (is (= "No products scanned yet. Please scan a product."
              @display-text)))))
 
@@ -22,7 +23,8 @@
                       (reset! mock-device message))
           display-fn (partial display/show device-fn)
           display-text mock-device
-          price-fn catalog/price]
+          price-fn catalog/price
+          cart {:total-str ""}]
       (sut/scan price-fn display-fn "product-1\n")
-      (sut/total display-fn)
+      (sut/total display-fn cart)
       (is (= "Total: USD 15.50" @display-text)))))
