@@ -19,20 +19,20 @@
         code))))
 
 (defn- update-cart-and-display-price
-  [display-device cart product-price]
+  [display cart product-price]
   (cart/update-total cart product-price)
-  (display/price display-device product-price))
+  (display/price display product-price))
 
 (defn scan
-  ([price display-device cart input]
+  ([price display cart input]
    (if-let [product-id (parse-product-id input)]
      (if-let [product-price (price product-id)]
-       (update-cart-and-display-price display-device cart product-price)
-       (display/not-found-message display-device))
-     (display/code-invalid-message display-device))))
+       (update-cart-and-display-price display cart product-price)
+       (display/not-found-message display))
+     (display/code-invalid-message display))))
 
 (defn total
-  ([display-device cart]
+  ([display cart]
    (if (cart/empty? cart)
-     (display/nothing-scanned-message display-device)
-     (display/total display-device (cart/total cart)))))
+     (display/nothing-scanned-message display)
+     (display/total display (cart/total cart)))))
