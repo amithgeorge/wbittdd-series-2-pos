@@ -20,8 +20,9 @@
   ([price display cart input]
    (if-let [product-id (parse-product-id input)]
      (if-let [product-price (price product-id)]
-       (do (display :price {:price product-price})
-           (swap! cart assoc :total-str product-price))
+       (let [product-price-str (if (string? product-price) product-price (format "USD %s" product-price))]
+         (do (display :price {:price product-price-str})
+             (swap! cart assoc :total-str product-price-str)))
        (display :not-found))
      (display :invalid))))
 
