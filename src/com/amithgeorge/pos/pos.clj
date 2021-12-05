@@ -16,17 +16,41 @@
         nil
         code))))
 
+(defn- update-cart-total
+  [cart product-price]
+  (swap! cart update :total (fnil + 0M) product-price))
+
+(defn- display-price
+  [display product-price]
+  (display :price {:price product-price}))
+
+(defn- display-not-found-message
+  [display]
+  (display :not-found))
+
+(defn- display-code-invalid-message
+  [display]
+  (display :invalid))
+
+(defn- display-nothing-scanned-message
+  [display]
+  (display :pass-through "No products scanned yet. Please scan a product."))
+
+(defn- display-total
+  [display total]
+  (display :total {:total total}))
+
 (defn scan
   ([price display cart input]
    (if-let [product-id (parse-product-id input)]
      (if-let [product-price (price product-id)]
-       (do (display :price {:price product-price})
-           (swap! cart update :total (fnil + 0M) product-price))
-       (display :not-found))
-     (display :invalid))))
+       (do (display-price display product-price)
+           (update-cart-total cart product-price))
+       (display-not-found-message display))
+     (display-code-invalid-message display))))
 
 (defn total
   [display cart]
   (if (zero? (get @cart :total))
-    (display :pass-through "No products scanned yet. Please scan a product.")
-    (display :total {:total (get @cart :total)})))
+    (display-nothing-scanned-message display)
+    (display-total display (get @cart :total))))
