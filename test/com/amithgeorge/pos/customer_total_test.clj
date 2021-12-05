@@ -19,7 +19,6 @@
   (testing "one product scanned, then display should show its price as total"
     (let [mock-device (atom "NOTHING_DISPLAYED_YET")
           device-fn (fn [message]
-                      (println "Received message:" message)
                       (reset! mock-device message))
           display-fn (partial display/show device-fn)
           display-text mock-device
@@ -28,3 +27,17 @@
       (sut/scan price-fn display-fn cart "product-1\n")
       (sut/total display-fn cart)
       (is (= "Total: USD 15.50" @display-text)))))
+
+(deftest ^:kaocha/skip two-products-scanned
+  (testing "two products scanned, then display sum of their prices as total"
+    (let [mock-device (atom "NOTHING_DISPLAYED_YET")
+          device-fn (fn [message]
+                      (reset! mock-device message))
+          display-fn (partial display/show device-fn)
+          display-text mock-device
+          price-fn catalog/price
+          cart (atom {:total-str ""})]
+      (sut/scan price-fn display-fn cart "product-1\n")
+      (sut/scan price-fn display-fn cart "product 2\n")
+      (sut/total display-fn cart)
+      (is (= "Total: USD 52.69" @display-text)))))
