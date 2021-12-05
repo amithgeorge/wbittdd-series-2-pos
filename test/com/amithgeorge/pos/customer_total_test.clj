@@ -42,3 +42,17 @@
       (sut/scan price-fn display-fn cart "product 2\n")
       (sut/total display-fn cart)
       (is (= "Total: USD 52.69" @display-text)))))
+
+(deftest any-scanning-error-doesnt-update-total
+  (testing "one product scanned, next product not found, display previous total"
+    (let [mock-device (atom "NOTHING_DISPLAYED_YET")
+          device-fn (fn [message]
+                      (reset! mock-device message))
+          display-fn (partial display/show device-fn)
+          display-text mock-device
+          price-fn catalog/price
+          cart (cart/new)]
+      (sut/scan price-fn display-fn cart "product-1\n")
+      (sut/scan price-fn display-fn cart "DUMMY PRODUCT\n")
+      (sut/total display-fn cart)
+      (is (= "Total: USD 15.50" @display-text)))))
