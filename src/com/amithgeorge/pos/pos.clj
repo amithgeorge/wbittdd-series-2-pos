@@ -1,11 +1,11 @@
 (ns com.amithgeorge.pos.pos
   (:require [clojure.string :as str]))
 
-(defn ends-with-newline? [input]
+(defn- ends-with-newline? [input]
   (or (.endsWith input "\n")
       (.endsWith input "\r\n")))
 
-(defn parse-product-id [input]
+(defn- parse-product-id [input]
   (if (or (str/blank? input)
           (not (ends-with-newline? input)))
     nil
