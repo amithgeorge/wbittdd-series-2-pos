@@ -1,6 +1,6 @@
 # com.amithgeorge/pos
 
-This an exercise for Series 2 of the course [The World’s Best Intro to TDD: Level 1](https://www.jbrains.ca/training/course/worlds-best-intro-to-tdd/)
+This an exercise for Series 2 - Series 3 of the course [The World’s Best Intro to TDD: Level 1](https://www.jbrains.ca/training/course/worlds-best-intro-to-tdd/)
 
 ## Dev Setup
 
